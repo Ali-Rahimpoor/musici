@@ -1,0 +1,624 @@
+/* ----------------------------- */
+/*  متغیرهای رنگ (OKLCH)          */
+/* ----------------------------- */
+:root {
+    --color-accent: oklch(84.5% 0.143 164.978);
+    --color-primary: oklch(50.8% 0.118 165.612);
+    --color-surface: oklch(96.7% 0.001 286.375);
+    
+    --color-bg-dark: #0a0f12;
+    --color-bg-card: #11181c;
+    --color-text-primary: #e8edf2;
+    --color-text-secondary: #8ba0b0;
+    --color-border: rgba(72, 187, 150, 0.15);
+    --color-error: #f87171;
+    --color-success: #4ade80;
+    
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --border-radius-xl: 1.75rem;
+    --border-radius-lg: 1.25rem;
+    --border-radius-md: 0.875rem;
+    --transition-smooth: all 0.3s ease;
+}
+
+/* ----------------------------- */
+/*  ریست و پایه                   */
+/* ----------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+   font-family: 'balo-med';
+   src: url('./font/BalooBhaijaan2-Medium.ttf') format('truetype');
+}
+@font-face {
+   font-family: 'balo-regular';
+   src: url('./font/BalooBhaijaan2-Regular.ttf') format('truetype');
+}
+@font-face {
+   font-family: 'balo-bold';
+   src: url('./font/BalooBhaijaan2-Bold.ttf') format('truetype');
+}
+.auth-body {
+    font-family: 'balo-med', system-ui, 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at 20% 30%, #0a1217, #05090c);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.auth-fullpage {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* کارت اصلی */
+.auth-main-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-xl);
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow-2xl);
+}
+
+/* ===================== */
+/*  کلاس‌های تب (JS Ready) */
+/* ===================== */
+.auth-tabs-wrapper {
+    margin-bottom: 2rem;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(10, 18, 21, 0.6);
+    padding: 0.5rem;
+    border-radius: 4rem;
+    border: 1px solid var(--color-border);
+}
+
+.auth-tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    border-radius: 3rem;
+    transition: var(--transition-smooth);
+    background: transparent;
+    border: none;
+    font-family: inherit;
+}
+
+.auth-tab:hover {
+    color: var(--color-accent);
+}
+
+.auth-tab.active {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    color: var(--color-bg-dark);
+}
+
+/* پنل‌ها */
+.auth-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* کلاس کمکی برای مخفی کردن المنت‌ها */
+.hidden {
+    display: none !important;
+}
+
+/* آیکون بزرگ */
+.auth-icon-large {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-accent), #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.auth-desc {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+/* فرم و اینپوت‌ها */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.9rem 2.8rem 0.9rem 1rem;
+    background: rgba(5, 10, 12, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(100, 200, 150, 0.1);
+}
+
+/* کلاس‌های خطا و موفقیت برای اینپوت‌ها */
+.auth-input.error {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1);
+}
+
+.auth-input.success {
+    border-color: var(--color-success);
+}
+
+/* دکمه‌ها */
+.btn-auth {
+    padding: 0.9rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), #1a4d3e);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* دکمه ثانویه */
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* نکته */
+.auth-note {
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(100, 200, 150, 0.05);
+    border-radius: var(--border-radius-md);
+    border-right: 3px solid var(--color-accent);
+}
+
+.note-text {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+/* گزینه‌های اضافی */
+.form-extra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.25rem 0;
+}
+
+.checkbox-custom-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.hidden-checkbox {
+    display: none;
+}
+
+.custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.hidden-checkbox:checked + .custom-checkbox {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.hidden-checkbox:checked + .custom-checkbox::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    color: #0a1217;
+    font-weight: bold;
+}
+
+.forgot-pass {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: var(--transition-smooth);
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+.link-accent {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.link-accent:hover {
+    text-decoration: underline;
+}
+
+/* پیام‌های خطا و موفقیت */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+.success-message {
+    color: var(--color-success);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1.5rem;
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.toast-message.error {
+    border-right-color: var(--color-error);
+}
+
+.toast-message.success {
+    border-right-color: var(--color-success);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* لودینگ اسپینر */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* فوتر */
+.auth-footer-links {
+    margin-top: 2rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-note {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+
+/* ریسپانسیو */
+@media (max-width: 550px) {
+    .auth-main-card {
+        padding: 1.5rem;
+    }
+    
+    .auth-tab {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.3rem;
+    }
+    
+    .auth-title {
+        font-size: 1.4rem;
+    }
+    
+    .auth-icon-large {
+        font-size: 2.5rem;
+    }
+    
+    .btn-auth {
+        padding: 0.75rem;
+    }
+    /* ===================== */
+/*  استایل‌های اسکلتون    */
+/* ===================== */
+
+/* حالت لودینگ فرم */
+.auth-form.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.auth-form.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 18, 21, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: var(--border-radius-lg);
+    z-index: 10;
+}
+
+/* اسکلتون حالت skeleton-mode */
+.skeleton-mode .skeleton-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-mode .skeleton-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(100, 200, 150, 0.1),
+        transparent
+    );
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* اسکلتون برای اینپوت‌ها */
+.skeleton-mode .auth-input {
+    background: rgba(20, 30, 35, 0.8);
+    border-color: transparent;
+    color: transparent;
+    cursor: not-allowed;
+}
+
+.skeleton-mode .auth-input::placeholder {
+    color: transparent;
+}
+
+/* اسکلتون برای لیبل‌ها */
+.skeleton-mode .input-label {
+    background: rgba(100, 200, 150, 0.1);
+    width: 120px;
+    height: 16px;
+    border-radius: 4px;
+    color: transparent;
+    display: inline-block;
+}
+
+/* اسکلتون برای چک‌باکس */
+.skeleton-mode .checkbox-custom-label {
+    pointer-events: none;
+}
+
+.skeleton-mode .checkbox-text {
+    background: rgba(100, 200, 150, 0.1);
+    width: 150px;
+    height: 16px;
+    border-radius: 4px;
+    color: transparent;
+    display: inline-block;
+}
+
+/* اسپینر لودینگ دکمه */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* غیرفعال کردن دکمه در حالت لودینگ */
+.btn-auth:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* افکت shimmer برای اسکلتون پیشرفته */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton-mode .auth-input,
+.skeleton-mode .input-label,
+.skeleton-mode .checkbox-text {
+    background-image: linear-gradient(
+        90deg,
+        rgba(100, 200, 150, 0.05) 0px,
+        rgba(100, 200, 150, 0.15) 40px,
+        rgba(100, 200, 150, 0.05) 80px
+    );
+    background-size: 200px 100%;
+    background-repeat: no-repeat;
+    animation: shimmer 1.5s infinite linear;
+}
+}
+.otp_code , .timer{
+    color:white;
+}
+.timer{
+    background-color: rgba(84, 84, 84, 0.203);
+    border-radius: 30px;
+    padding: 5px;
+}
+.flex_bet{
+    display: flex;
+    justify-content: space-between;
+}
+.timer-wrapper {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+}
+
+.timer-text {
+    direction: ltr;
+    display: inline-block;
+}
+
+.resend-otp-btn {
+    background: none;
+    border: none;
+    color: #00d4ff;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.resend-otp-btn:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}

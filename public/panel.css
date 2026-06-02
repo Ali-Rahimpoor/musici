@@ -1,0 +1,1774 @@
+/* ----------------------------- */
+/*  متغیرهای رنگ (OKLCH)          */
+/* ----------------------------- */
+:root {
+    --color-accent: oklch(84.5% 0.143 164.978);
+    --color-primary: oklch(50.8% 0.118 165.612);
+    --color-surface: oklch(96.7% 0.001 286.375);
+    
+    --color-bg-dark: #0a0f12;
+    --color-bg-card: #11181c;
+    --color-text-primary: #e8edf2;
+    --color-text-secondary: #8ba0b0;
+    --color-border: rgba(72, 187, 150, 0.15);
+    --color-error: #f87171;
+    --color-success: #4ade80;
+    
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --border-radius-xl: 1.75rem;
+    --border-radius-lg: 1.25rem;
+    --border-radius-md: 0.875rem;
+    --transition-smooth: all 0.3s ease;
+}
+
+/* ----------------------------- */
+/*  ریست و پایه                   */
+/* ----------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@font-face {
+   font-family: 'balo-med';
+   src: url('./font/BalooBhaijaan2-Medium.ttf') format('truetype');
+}
+@font-face {
+   font-family: 'balo-regular';
+   src: url('./font/BalooBhaijaan2-Regular.ttf') format('truetype');
+}
+@font-face {
+   font-family: 'balo-bold';
+   src: url('./font/BalooBhaijaan2-Bold.ttf') format('truetype');
+}
+.auth-body {
+    font-family: 'balo-med', system-ui, 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at 20% 30%, #0a1217, #05090c);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.auth-fullpage {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* کارت اصلی */
+.auth-main-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-xl);
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow-2xl);
+}
+
+/* ===================== */
+/*  کلاس‌های تب (JS Ready) */
+/* ===================== */
+.auth-tabs-wrapper {
+    margin-bottom: 2rem;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(10, 18, 21, 0.6);
+    padding: 0.5rem;
+    border-radius: 4rem;
+    border: 1px solid var(--color-border);
+}
+
+.auth-tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    border-radius: 3rem;
+    transition: var(--transition-smooth);
+    background: transparent;
+    border: none;
+    font-family: inherit;
+}
+
+.auth-tab:hover {
+    color: var(--color-accent);
+}
+
+.auth-tab.active {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    color: var(--color-bg-dark);
+}
+
+/* پنل‌ها */
+.auth-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* کلاس کمکی برای مخفی کردن المنت‌ها */
+.hidden {
+    display: none !important;
+}
+
+/* آیکون بزرگ */
+.auth-icon-large {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-accent), #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.auth-desc {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+}
+
+/* فرم و اینپوت‌ها */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.9rem 2.8rem 0.9rem 1rem;
+    background: rgba(5, 10, 12, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(100, 200, 150, 0.1);
+}
+
+/* کلاس‌های خطا و موفقیت برای اینپوت‌ها */
+.auth-input.error {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1);
+}
+
+.auth-input.success {
+    border-color: var(--color-success);
+}
+
+/* دکمه‌ها */
+.btn-auth {
+    padding: 0.9rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    font-family: inherit;
+}
+
+.btn-primary {
+    font-family: 'balo-med';
+    background: linear-gradient(135deg, var(--color-primary), #1a4d3e);
+    color: white;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* دکمه ثانویه */
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* نکته */
+.auth-note {
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(100, 200, 150, 0.05);
+    border-radius: var(--border-radius-md);
+    border-right: 3px solid var(--color-accent);
+}
+
+.note-text {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+/* گزینه‌های اضافی */
+.form-extra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.25rem 0;
+}
+
+.checkbox-custom-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.hidden-checkbox {
+    display: none;
+}
+
+.custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.hidden-checkbox:checked + .custom-checkbox {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.hidden-checkbox:checked + .custom-checkbox::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    color: #0a1217;
+    font-weight: bold;
+}
+
+.forgot-pass {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: var(--transition-smooth);
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+.link-accent {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.link-accent:hover {
+    text-decoration: underline;
+}
+
+/* پیام‌های خطا و موفقیت */
+.error-message {
+    color: var(--color-error);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+.success-message {
+    color: var(--color-success);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1.5rem;
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.toast-message.error {
+    border-right-color: var(--color-error);
+}
+
+.toast-message.success {
+    border-right-color: var(--color-success);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* لودینگ اسپینر */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* فوتر */
+.auth-footer-links {
+    margin-top: 2rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-note {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+
+/* ریسپانسیو */
+@media (max-width: 550px) {
+    .auth-main-card {
+        padding: 1.5rem;
+    }
+    
+    .auth-tab {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.3rem;
+    }
+    
+    .auth-title {
+        font-size: 1.4rem;
+    }
+    
+    .auth-icon-large {
+        font-size: 2.5rem;
+    }
+    
+    .btn-auth {
+        padding: 0.75rem;
+    }
+}
+
+/* ===================== */
+/*  استایل‌های داشبورد     */
+/* ===================== */
+
+.dashboard-body {
+    font-family: 'balo-med', system-ui, 'Segoe UI', sans-serif;
+    background: var(--color-bg-dark);
+    color: var(--color-text-primary);
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===================== */
+/*  سایدبار              */
+/* ===================== */
+.sidebar {
+    width: 280px;
+    background: rgba(17, 24, 28, 0.95);
+    border-left: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+}
+
+.user-badge {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background: rgba(100, 200, 150, 0.1);
+    border-radius: 2rem;
+}
+
+.user-role {
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    width: 100%;
+    text-align: right;
+    font-family: inherit;
+}
+
+.nav-item:hover {
+    background: rgba(100, 200, 150, 0.05);
+    color: var(--color-accent);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, transparent, rgba(100, 200, 150, 0.1));
+    color: var(--color-accent);
+    border-right: 3px solid var(--color-accent);
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+}
+
+.nav-divider {
+    padding: 1rem 1.5rem 0.5rem;
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+    letter-spacing: 1px;
+}
+
+.admin-section {
+    margin-top: 1rem;
+}
+
+.admin-section.hidden {
+    display: none;
+}
+
+.sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    border-radius: var(--border-radius-md);
+    color: #f87171;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    width: 100%;
+    font-family: inherit;
+}
+
+.logout-btn:hover {
+    background: rgba(248, 113, 113, 0.2);
+    transform: translateX(-4px);
+}
+
+/* ===================== */
+/*  محتوای اصلی          */
+/* ===================== */
+.main-content {
+    flex: 1;
+    margin-right: 280px;
+    padding: 1.5rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-title h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.header-title p {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.notification-bell {
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.notification-bell:hover {
+    color: var(--color-accent);
+    transform: scale(1.1);
+}
+
+.user-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+}
+
+/* ===================== */
+/*  صفحات (Page System)  */
+/* ===================== */
+.page-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.page-content.active {
+    display: block;
+}
+
+/* ===================== */
+/*  کارت‌های آماری        */
+/* ===================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+}
+
+.stat-info h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+.stat-info p {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+}
+
+/* ===================== */
+/*  نمودار و گرید        */
+/* ===================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-container, .top-music {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.chart-select {
+    background: var(--color-bg-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    padding: 0.25rem 0.5rem;
+    color: var(--color-text-primary);
+}
+
+.chart-placeholder {
+    padding: 1rem 0;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 200px;
+    gap: 0.5rem;
+}
+
+.bar-item {
+    flex: 1;
+    background: linear-gradient(to top, var(--color-primary), var(--color-accent));
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-smooth);
+    min-width: 30px;
+}
+
+.bar-item:hover {
+    opacity: 0.8;
+    transform: scaleY(1.02);
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0.75rem;
+    color: var(--color-text-secondary);
+    font-size: 0.7rem;
+}
+
+/* لیست موزیک */
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.music-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(10, 18, 21, 0.5);
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-smooth);
+}
+
+.music-item:hover {
+    background: rgba(100, 200, 150, 0.05);
+}
+
+.music-rank {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    width: 35px;
+}
+
+.music-info {
+    flex: 1;
+}
+
+.music-info h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+}
+
+.music-info p {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.music-plays {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+/* فعالیت‌ها */
+.recent-activities {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.activity-icon {
+    font-size: 1.2rem;
+}
+
+.activity-info p {
+    font-size: 0.9rem;
+}
+
+.activity-time {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+}
+
+/* ===================== */
+/*  پروفایل کاربری       */
+/* ===================== */
+.profile-container {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.profile-avatar-large {
+    text-align: center;
+}
+
+.profile-avatar-large img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--color-accent);
+    margin-bottom: 0.5rem;
+}
+
+.change-avatar-btn {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.profile-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-email {
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.profile-role {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+}
+
+.profile-form, .change-password-section {
+    margin-top: 2rem;
+}
+
+.change-password-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.change-password-section h3 {
+    margin-bottom: 1rem;
+}
+
+/* ===================== */
+/*  علاقه‌مندی‌ها         */
+/* ===================== */
+.favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.favorite-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.favorite-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+}
+
+.favorite-img {
+    font-size: 3rem;
+}
+
+.favorite-info h4 {
+    margin-bottom: 0.25rem;
+}
+
+.favorite-info p {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.btn-play, .btn-remove {
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.btn-play {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn-remove {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+}
+
+/* ===================== */
+/*  تنظیمات و فرم‌ها     */
+/* ===================== */
+.settings-container, .form-container {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.settings-section h3 {
+    margin-bottom: 1rem;
+}
+
+.setting-item {
+    margin-bottom: 1rem;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(10, 18, 21, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+    font-family: inherit;
+    resize: vertical;
+}
+
+.categories-list {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.categories-list h3 {
+    margin-bottom: 1rem;
+}
+
+.category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(100, 200, 150, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.delete-cat {
+    background: transparent;
+    border: none;
+    color: #f87171;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.btn-link {
+    background: transparent;
+    border: none;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.btn-outline {
+    font-family: 'balo-med';
+    background: transparent;
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+.nav-text{
+    text-decoration: none;
+    color:white;
+}
+.btn-save-profile, .btn-save-settings, .btn-change-password {
+    margin-top: 1rem;
+}
+.nav-item{
+    text-decoration: none;
+}
+/* ریسپانسیو */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 80px;
+    }
+    
+    .sidebar .nav-text,
+    .sidebar .user-badge,
+    .sidebar .nav-divider {
+        display: none;
+    }
+    
+    .sidebar .nav-item {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+    
+    .main-content {
+        margin-right: 80px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .favorites-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ============= پروفایل کاربری ============= */
+.page-content {
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+/* هدر پروفایل */
+.profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    color: white;
+    position: relative;
+}
+
+.profile-avatar-large {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-avatar-large img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.change-avatar-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: white;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.change-avatar-btn:hover {
+    background: rgba(0,0,0,0.9);
+    transform: scale(1.05);
+}
+
+.profile-info h2 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.profile-email {
+    margin: 5px 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.profile-role {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* فرم پروفایل */
+.profile-form {
+    padding: 40px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #e6e6e6;
+    font-size: 14px;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+    font-family: inherit;
+}
+
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn-save-profile {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-save-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102,126,234,0.3);
+}
+
+/* بخش تغییر رمز عبور */
+.change-password-section {
+    padding: 40px;
+    background: #f8fafc;
+}
+
+.change-password-section h3 {
+    margin: 0 0 20px 0;
+    color: #2d3748;
+    font-size: 20px;
+    font-weight: 600;
+    padding-right: 0;
+    border-right: none;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.change-password-section h3:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 3px;
+}
+
+.btn-change-password {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-change-password:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+}
+
+/* استایل برای موبایل */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 15px;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+    
+    .profile-info h2 {
+        font-size: 22px;
+    }
+    
+    .profile-form {
+        padding: 25px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .change-password-section {
+        padding: 25px;
+    }
+    
+    .change-password-section .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* انیمیشن لودینگ برای دکمه‌ها */
+.btn-save-profile.loading,
+.btn-change-password.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-save-profile.loading:after,
+.btn-change-password.loading:after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    left: 20px;
+    margin-top: -9px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* استایل برای خطاها */
+.form-group.error .form-input {
+    border-color: #f56565;
+    background: #fff5f5;
+}
+
+.form-group .error-message {
+    color: #f56565;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* استایل موفقیت */
+.form-group.success .form-input {
+    border-color: #48bb78;
+    background: #f0fff4;
+}
+
+/* toast notification (اختیاری) */
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #2d3748;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+.toast-message.success {
+    background: #48bb78;
+}
+
+.toast-message.error {
+    background: #f56565;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+/* استایل پایه - پیش‌فرض مخفی */
+#cropper-wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* نمایش با کلاس show */
+#cropper-wrapper.show {
+    display: flex;
+}
+
+/* باکس اصلی */
+#cropper-wrapper .cropper-box {
+    background: #fff;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    direction: rtl;
+}
+
+#cropper-wrapper .croppie {
+    width:auto;
+    height: 256px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+} 
+
+/* فوتر دکمه‌ها */
+#cropper-wrapper .cropper-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+/* دکمه برش */
+#cropper-wrapper .crop-croppie {
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+    transition: 0.2s;
+}
+
+#cropper-wrapper .crop-croppie:hover {
+    background-color: #218838;
+}
+
+/* دکمه انصراف */
+#cropper-wrapper .close-croppie-modal {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+    transition: 0.2s;
+}
+
+#cropper-wrapper .close-croppie-modal:hover {
+    background-color: #c82333;
+}
+/* ============= صفحه اضافه کردن موزیک ============= */
+.page-content {
+    padding: 30px;
+    background: #0f0f1a;
+    min-height: 100vh;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #1a1a2e;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid #2d3748;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #2d3748;
+}
+
+.title-icon {
+    font-size: 32px;
+}
+
+/* فرم */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #f3f3f4;
+    font-size: 14px;
+}
+
+.label-icon {
+    font-size: 18px;
+}
+
+.form-input, .form-textarea, select.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #0f0f1a;
+    border: 2px solid #2d3748;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-input:focus, .form-textarea:focus, select.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+    background: #16213e;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* آپلودر */
+.upload-area {
+    background: #0f0f1a;
+    border: 2px dashed #2d3748;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.upload-area:hover {
+    border-color: #667eea;
+    background: #16213e;
+}
+
+.upload-content {
+    pointer-events: none;
+}
+
+.upload-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    color: #e2e8f0;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+}
+
+.upload-hint {
+    color: #718096;
+    font-size: 12px;
+    margin: 0;
+}
+
+.upload-preview {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #1a1a2e;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.upload-preview img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.preview-icon {
+    font-size: 40px;
+}
+
+.preview-name {
+    color: #e2e8f0;
+    font-size: 14px;
+}
+
+.remove-file {
+    background: #e53e3e;
+    border: none;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.remove-file:hover {
+    background: #c53030;
+    transform: scale(1.1);
+}
+
+/* پروگرس بار */
+.progress-bar {
+    margin-top: 15px;
+    background: #2d3748;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 30px;
+}
+
+.progress-fill {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* دکمه submit */
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .page-content {
+        padding: 15px;
+    }
+    
+    .form-container {
+        padding: 25px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .upload-area {
+        padding: 20px;
+    }
+}
