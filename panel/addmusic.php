@@ -11,6 +11,7 @@ $music_cover='';
 $music_url = '';
 $music_id=0;
 $category='';
+$artist='';
 $music_year='';
 if(isset($_GET['action']) && $_GET['action']=='edit' && isset($_GET['id']) ){
     $music_id = $_GET['id'];
@@ -28,6 +29,11 @@ if(isset($_GET['action']) && $_GET['action']=='edit' && isset($_GET['id']) ){
         if($cat_result && $cat_result->num_rows){
             $category = (int)mysqli_fetch_column($cat_result);
             // print_r($category);exit;
+        }
+        $artist_sql = "SELECT artist_id FROM music_artist WHERE music_id = $music_id";
+        $artist_res = db_query($artist_sql);
+        if($artist_res && $artist_res->num_rows){
+            $artist = (int)mysqli_fetch_column($artist_res);
         }
     }else{
         $music_id=0;
@@ -53,6 +59,7 @@ if(isset($_GET['action']) && $_GET['action']=='edit' && isset($_GET['id']) ){
             <input type="hidden" id='hidden_music_url' name='hidden_music_url' value="<?php echo $music_url ?>">
             <input type="hidden" id='hidden_music_cover' name='hidden_music_cover' value="<?php echo $music_cover; ?>">
             <input type="hidden" id='hidden_music_category' value="<?php echo $category ?>">
+            <input type="hidden" id='hidden_music_artist' value="<?php echo $artist ?>">
             <!-- نام آهنگ -->
             <div class="form-group">
                 <label class="form-label">
@@ -70,7 +77,15 @@ if(isset($_GET['action']) && $_GET['action']=='edit' && isset($_GET['id']) ){
                 </label>
                 <textarea name="content" class="form-textarea" id="musicDescription" placeholder="توضیحات درباره آهنگ..." rows="4"><?php echo $content; ?></textarea>
             </div>
-            
+                 <div class="form-group">
+                    <label class="form-label">
+                        <span class="label-icon">🎵</span>
+                        خواننده
+                    </label>                    
+                    <select name='artist' class="form-input" id="musicArtist" >
+                      
+                    </select>        
+                </div>
             <!-- دسته‌بندی و سال -->
             <div class="form-row">
                 <div class="form-group">

@@ -199,6 +199,37 @@ $(document).ready(function() {
         })
         
     })
+    $(".delete-artist").click(function(e){
+    let btn = e.target;
+    let id = $(btn).data('id');
+    let parentTag = btn.closest('.category-tag');
+    
+    // console.log(id);
+        $.ajax({
+            data:{id:id},
+            url:'../ajax/artist/delete.php',
+            type:"POST",
+            beforeSend:function(){
+            },
+            success:function(res){
+                toaster.success(res.message);
+                    parentTag.remove();
+                    if($('#existingCategories .category-tag').length === 0) {
+                        $('#existingCategories').append('<div>دسته بندی یافت نشد</div>');
+                    }
+            },
+                error: function(jqXHR){
+                let errorMsg = jqXHR.responseJSON?.message || 'خطا در حذف دسته بندی';
+                toaster.error(errorMsg);
+                parentTag.css('opacity', '1');
+            },
+            complete: function() {
+                if(parentTag.length) {
+                    btn.html('✖').attr('disabled', false);
+                }
+            }
+        }) 
+    })
     let musicFile = null;
     let imageFile = null;
     // ============= آپلودر موزیک =============
@@ -282,7 +313,26 @@ $(document).ready(function() {
     
     // ============= بارگذاری دسته‌بندی‌ها =============
     loadCategories();
-    
+      function loadArtists() {
+        $.ajax({
+            type: "GET",
+            url: "../ajax/artist/get_artists.php",
+            dataType: "json",
+            success: function(res) {
+                if(res.success && res.artists) {
+                    let options = '<option value="">انتخاب خواننده</option>';
+                    $.each(res.artists, function(index, cat) {
+                        options += `<option value="${cat.ID}">${cat.full_name}</option>`;
+                    });
+                    $('#musicArtist').html(options);
+                }
+            },
+            error: function() {
+                toaster.error('خطا در دریافت دسته‌بندی‌ها', 'error');
+            }
+        });
+    }
+    loadArtists();
     // ============= ارسال فرم =============
     $("#addMusicForm").submit(function(e){
         e.preventDefault();
@@ -291,6 +341,7 @@ $(document).ready(function() {
         let title = $('#musicName').val().trim();
         let content = $('#musicDescription').val().trim();
         let category = $('#musicCategory').val();
+        let artist = $('#musicArtist').val();
         let year = $('#musicYear').val().trim();
         let music_id = $('#music_id').val();
 
@@ -314,7 +365,10 @@ $(document).ready(function() {
             toaster.error('لطفا دسته‌بندی را انتخاب کنید', 'error');
             return;
         }        
-
+        if(!artist){
+            toaster.error('لطفا خوانننده را انتخاب کنید', 'error');
+            return;
+        }
         if(!musicFile){
             toaster.error('لطفا موزیک را انتخاب کنید', 'error');
             return;
@@ -329,6 +383,7 @@ $(document).ready(function() {
         let formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
+        formData.append('artist',artist);
         formData.append('category', category);
         formData.append('created_at', year);
         formData.append('music', musicFile);
@@ -419,6 +474,12 @@ $(document).ready(function() {
                     let category = $('#hidden_music_category').val();
                     if(category && category.length){
                             $('#musicCategory').val(category);
+                    }
+                });           
+                $(document).ajaxComplete(function() {
+                    let artist = $('#hidden_music_artist').val();
+                    if(artist && artist.length){
+                            $('#musicArtist').val(artist);
                     }
                 });           
         };

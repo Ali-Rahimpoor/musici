@@ -5,7 +5,6 @@
  if($userId){
     $user = get_user_by_id($userId);
  }
-// print_r($user);exit;
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">

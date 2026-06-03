@@ -93,9 +93,17 @@ if(isset($_POST['category']) ){
             'music_id'=>$music_id,
             'category_id'=>$cat_id]);
 }
-
-
 sync_cat_music_count();
+
+db_delete('music_artist',"music_id = $music_id");
+if(isset($_POST['artist'])){
+   $artist_id = $_POST['artist'];
+   db_insert('music_artist',[
+      'music_id'=>$music_id,
+      'artist_id'=>$artist_id
+   ]);
+}
+sync_artist_music_count();
 // $href = '';
 // if(!$is_edit){
 //    $href = panel_url('music.php?action=edit&id=' . $music_id);

@@ -40,3 +40,16 @@ function sync_cat_music_count(){
       }
    }
 }
+function sync_artist_music_count(){
+   db_update("artists",['music_count'=>0],'1=1');
+   $sql = "SELECT artist_id AS ID,COUNT(*) AS total FROM music_artist GROUP BY artist_id";
+   $res = db_query($sql);
+   if($res && $res->num_rows){
+      $result = mysqli_fetch_all($res,MYSQLI_ASSOC);
+      foreach($result as $artist){
+         db_update('artists',[
+            'music_count'=>$artist['total']
+         ],['ID'=>$artist['ID']]);
+      }
+   }
+}

@@ -31,6 +31,10 @@
                         <span class="nav-icon">🎵</span>
                         <span  class="nav-text">اضافه کردن موزیک</span>
                     </a>
+                    <a href='artist.php' class="nav-item" data-page="add-artist">
+                        <span class="nav-icon">🎵</span>
+                        <span  class="nav-text">اضافه کردن خواننده</span>
+                    </a>
                     <a href='category.php' class="nav-item" data-page="add-category">
                         <span class="nav-icon">📁</span>
                         <span  class="nav-text">اضافه کردن دسته‌بندی</span>
