@@ -108,6 +108,7 @@ $(document).ready(function() {
         // $('#categories').html(`<option>همه دسته بندی ها</option>`);
         // بارگذاری مجدد
         loadCategories();
+        loadArtists();
         loadMusicData();
     });
     // جستجوی زنده (اختیاری - با تاخیر)
@@ -138,6 +139,22 @@ $(document).ready(function() {
             }
         })
     }
+     function loadArtists(){
+        $.ajax({
+            type:"POST",
+            url:"./ajax/artist/get_artists.php",
+            success:function(res){
+                let html = '<option value="">همه خواننده ها</option>';
+                if(res.success){
+                    res.artists.forEach(cat => {
+                        html += `<option value="${cat.ID}">${cat.full_name}</option>`;
+                    });
+                }
+                $("#artists").html(html);
+            }
+        })
+    }
+    loadArtists();
 });
 
 function updateDownloadCount(musicId) {

@@ -20,30 +20,36 @@ $params = [];
 // جستجو
 if(isset($_GET['search']) && $_GET['search']){
    $search = db_escape($_GET['search']);
-   $where .= " AND ( title LIKE '%$search%' OR content LIKE '%$search%' )";
+   $where .= " AND ( CONCAT(music_title ,' ' , music_content , ' ' ,artist_name) LIKE '%$search%' )";
 }
 
 // دسته بندی
 if(isset($_GET['category']) && $_GET['category'] != 'all' && $_GET['category'] != ''){
    $category = db_escape($_GET['category']);
-   $where .= " AND ID IN ( SELECT music_id FROM music_category WHERE category_id = '$category' )";
+   $where .= " AND category_id = '$category'  ";
 }
+if(isset($_GET['artist']) && $_GET['artist'] != 'all' && $_GET['artist'] != ''){
+   $artist = db_escape($_GET['artist']);
+   $where .= " AND artist_id = '$artist'  ";
+}
+
+
 
 // مرتب سازی
 $orderBy = "created_at DESC"; // پیش فرض
 if(isset($_GET['orderby'])){
     switch($_GET['orderby']){
         case 'newest':
-            $orderBy = "created_at DESC";
+            $orderBy = "music_created_at DESC";
             break;
         case 'popular':
-            $orderBy = "like_count DESC";
+            $orderBy = "music_like_count DESC";
             break;
         case 'most_download':
-            $orderBy = "download_count DESC";
+            $orderBy = "music_download_count DESC";
             break;
         default:
-            $orderBy = "created_at DESC";
+            $orderBy = "music_created_at DESC";
     }
 }
 $page= isset($_GET['page']) ? ($_GET['page']) : 1;
@@ -53,28 +59,18 @@ if($page == 'next'){
 $per_page = isset($_GET['per_page']) ? intval($_GET['per_page']) : get_setting('home_music_count',4);
 $offset= ($page-1) * $per_page;
 
-$musicSql = "SELECT * FROM musics WHERE $where ORDER BY $orderBy LIMIT $per_page OFFSET $offset ";
+$musicSql = "SELECT * FROM view_musics WHERE $where ORDER BY $orderBy LIMIT $per_page OFFSET $offset ";
+// print_r($musicSql);exit;
 
 $res = db_query($musicSql);
 $musics = [];
 if($res && $res->num_rows){
-    while($music = mysqli_fetch_assoc($res)){
-            $music_idd = $music['ID'];
-            $music['cat'] = false;
-            $sql = "SELECT * from categories WHERE ID IN (SELECT category_id FROM music_category WHERE music_id = '$music_idd') ORDER BY music_count DESC LIMIT 1";
-            $cat_query = db_query($sql);
-            if($cat_query && $cat_query -> num_rows){
-                $music['cat'] = mysqli_fetch_assoc($cat_query);
-            }
-            $musics[]=$music;
-    }
+    $musics = mysqli_fetch_all($res,MYSQLI_ASSOC);
+    // print_r($musics);exit;
 }
 
 // PAGINATE
-
-
-
-$total_query = db_query("SELECT COUNT(*) FROM musics WHERE $where");
+$total_query = db_query("SELECT COUNT(*) FROM view_musics WHERE $where");
 
 $total_results=0;
 if($total_query && $total_query->num_rows){
@@ -90,26 +86,26 @@ ob_start();
 
 <?php if($musics): ?>
     <?php foreach($musics as $music): ?>
-     <div class="music-card" data-music-id="<?php echo $music['ID']; ?>">
+     <div class="music-card" data-music-id="<?php echo $music['music_id']; ?>">
         <div class="card-image">
-            <img src="<?php echo isset($music['cover']) && $music['cover'] ? $music['cover'] : './public/img/default-cover.jpg'; ?>" alt="کاور آهنگ">
+            <img src="<?php echo isset($music['music_cover']) && $music['music_cover'] ? $music['music_cover'] : site_url('public/img/default_cover.jpg'); ?>" alt="کاور آهنگ">
             <div class="play-overlay">
                 <button class="play-btn play-now-btn" data-music-url="<?php echo htmlspecialchars($music['music_url']); ?>">▶</button>
             </div>
         </div>
         <div class="card-body">
+            <h3 class="music-title"><?php echo htmlspecialchars($music['music_title']); ?></h3>
             <div class="card-header">
                 <?php if($is_admin): ?>
-                <a style="color: #cccccc; text_decoration:none;" href="./panel/addmusic.php?action=edit&id=<?php echo $music
-                ['ID'] ?>">ادیت موزیک</a>
-                <?php endif; ?>
-                <h3 class="music-title"><?php echo htmlspecialchars($music['title']); ?></h3>
-                <span class="music-category"><?php echo isset($music['cat']['title']) ? htmlspecialchars($music['cat']['title']) : 'متفرقه'; ?></span>
+                <a style="color: #cccccc; text_decoration:none;" href="<?php echo panel_url('addMusic.php?action=edit&id='.$music['music_id']); ?>">ادیت موزیک</a>
+                <?php endif; ?>                
+                <span class="music-category"><?php echo isset($music['category_id']) ? $music['category_title'] : 'متفرقه'; ?></span>
+                <span class="music-category"><?php echo isset($music['artist_id']) ? $music['artist_name'] : 'ناشناس'; ?></span>
             </div>
-            <p class="music-description"><?php echo htmlspecialchars(substr($music['content'], 0, 100)) . (strlen($music['content']) > 100 ? '...' : ''); ?></p>
+            <p class="music-description"><?php echo htmlspecialchars(substr($music['music_content'], 0, 100)) . (strlen($music['music_content']) > 100 ? '...' : ''); ?></p>
             <div class="music-actions">
                 <?php
-                 $music_id = $music['ID'];
+                 $music_id = $music['music_id'];
                  $user_id = get_current_user_id();
                  $is_login = false;
                  $is_liked = false;
@@ -123,7 +119,7 @@ ob_start();
                  }
                 ?>
                 <?php if($is_login): ?>
-                    <button class="action-btn like-btn <?php echo $is_liked !=0 ? 'liked' : ''; ?> " data-music-id="<?php echo $music['ID']; ?>">
+                    <button class="action-btn like-btn <?php echo $is_liked !=0 ? 'liked' : ''; ?> " data-music-id="<?php echo $music['music_id']; ?>">
                         <span class="like-icon">❤️</span>
                     </button>
                 <?php else: ?>
@@ -131,7 +127,7 @@ ob_start();
                         <span class="like-icon">❤️</span>
                     </button>
                 <?php endif; ?>
-                <a data-music-id='<?php echo $music['ID']; ?>' download href="<?php echo htmlspecialchars($music['music_url']); ?>" class="download-btn action-btn">
+                <a data-music-id='<?php echo $music['music_id']; ?>' download href="<?php echo htmlspecialchars($music['music_url']); ?>" class="download-btn action-btn">
                  ⬇️
                  دانلود
               </a>
@@ -141,9 +137,9 @@ ob_start();
                 </button>
             </div>
             <div class="music-meta">
-                <span>📅 <?php echo jdate('Y/m/d',strtotime($music['created_at'])); ?></span>
-                <span>🎧 <span data-music-id='<?php echo $music['ID']; ?>' class="download_count"><?php echo number_format($music['download_count']); ?></span> دانلود</span>
-                <span>❤️ <span data-music-id='<?php echo $music['ID']; ?>' class="like_count_display"><?php echo number_format($music['like_count'] ?? 0); ?></span> لایک</span>
+                <span>📅 <?php echo jdate('Y/m/d',strtotime($music['music_created_at'])); ?></span>
+                <span>🎧 <span data-music-id='<?php echo $music['music_id']; ?>' class="download_count"><?php echo number_format($music['music_download_count']); ?></span> دانلود</span>
+                <span>❤️ <span data-music-id='<?php echo $music['music_id']; ?>' class="like_count_display"><?php echo number_format($music['music_like_count'] ?? 0); ?></span> لایک</span>
             </div>
         </div>
     </div>

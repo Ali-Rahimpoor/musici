@@ -73,6 +73,14 @@
                 
             </select>
         </div>
+
+        <div class="filter-group">
+            <label>🎤 خواننده</label>
+            <select name='artist' id='artists'>
+                <option value="all">همه خواننده ها</option>
+                
+            </select>
+        </div>
         
         <div class="filter-group">
             <label>🎚️ مرتب سازی بر اساس</label>
