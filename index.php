@@ -50,7 +50,7 @@
     </header>
     <!-- بخش فیلترها -->
     <form action="" class="filters-section">
-        
+        <input type="hidden" name="artist"  id="artist_input" value="<?php echo isset($_GET['artist']) && $_GET['artist'] ? $_GET['artist'] : 'all' ;?>" >
         <input type="hidden" id="page_input" value="1" name='page'>
          <div class="filter-group">
             <label>تعداد موزیک در صفحه</label>
@@ -63,7 +63,7 @@
         </div>
         <div class="filter-group">
             <label>🔍 جستجوی آهنگ یا خواننده</label>
-            <input name='search' type="text" placeholder="مثال: جدایی, شادمهر ...">
+            <input  name='search' type="text" placeholder="مثال: جدایی, شادمهر ...">
         </div>
         
         <div class="filter-group">
@@ -76,7 +76,7 @@
 
         <div class="filter-group">
             <label>🎤 خواننده</label>
-            <select name='artist' id='artists'>
+            <select  id='artists'>
                 <option value="all">همه خواننده ها</option>
                 
             </select>
@@ -113,6 +113,7 @@
     </footer>
 </div>
 <script src="./js/jquery-3.7.1.min.js"></script>
+<script src="./js/toaster.js"></script>
 <script src="./js/script.js"></script>
 <script src="./js/player.js"></script>
 </body>

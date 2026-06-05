@@ -1,4 +1,14 @@
 $(document).ready(function() {
+    const toaster = new Toaster({
+            position: 'top-right',
+            duration: 3000,
+            animation: 'slide',
+            maxToasts: 5,
+            rtl: true,
+            pauseOnHover: true,
+            closeButton: true,
+            progressBar: true
+   });
     $(document).on('click','.need_login',function(e){
         e.preventDefault();
         alert('برای لایک کردن باید وارد حساب کاربری خود شوید');
@@ -42,10 +52,77 @@ $(document).ready(function() {
         $("#page_input").val(e.target.textContent);
         loadMusicData();
     })
-
+    function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        toaster.success('موفقیت','آدرس با موفقیت ذخیره شد');
+    }
+    $('.share-btn').on('click',function(e){
+        e.preventDefault();
+        let url = window.location.href;
+        copyToClipboard(url);
+    });
     // بارگذاری اولیه
-    loadMusicData();
-    
+    if($('form.filters-section').length){
+        loadMusicData();
+    }
+    if($(".music-related").length){
+        loadRelated_musics();
+    }
+    function loadRelated_musics() {        
+        let artist_id = $('.music-related').data('artist-id');
+        let music_id = $('.music-related').data('music-id');
+        
+        $.ajax({
+            type: "GET",
+            url: './ajax/music/get_related_music.php',
+            data: {
+                artist_id,
+                music_id
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                 $('.music-grid').addClass('loading');
+                 $('.music-grid').html(`
+                    <div class="spinner-container">
+                        <div style="text-align: center;">
+                            <div class="spinner"></div>
+                            <div class="spinner-text">در حال بارگذاری...</div>
+                        </div>
+                    </div>
+                `);
+            },
+            complete: function() {
+                 $('.music-grid').removeClass('loading');
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('.music-grid').find('.music-card, .item, .card').addClass('music-card');
+                    $('.music-grid').html(response.summary);
+                    $('.pagination').html(response.pagination);
+                    // به‌روزرسانی شمارنده نتایج
+                    if (response.count !== undefined) {
+                        $('.result-count').html(`
+                            <span>${response.count} <span>  تا پیدا شد `);
+                        if(response.count === 0) {
+                            $('.result-count').addClass('no-result');
+                        } else {
+                            $('.result-count').removeClass('no-result');
+                        }
+                    }
+                } else {
+                    $('.music-grid').html('<div class="error-message">❌ خطا در بارگذاری موزیک‌ها</div>');
+                }
+            },
+            error: function() {
+                $('.music-grid').html('<div class="error-message">❌ خطا در ارتباط با سرور</div>');
+            }
+        });
+    }
     // تابع بارگذاری موزیک‌ها
     function loadMusicData() {
         let formData = $('form.filters-section').serialize();
@@ -103,6 +180,11 @@ $(document).ready(function() {
     $('.btn-reset').on('click', function() {
         // ریست کردن تمام فیلدهای فرم
         $('form.filters-section')[0].reset();
+        var currentUrl = window.location.href;
+        var cleanUrl = currentUrl.split('?')[0];
+        window.history.pushState({}, '', cleanUrl);
+        $("#artist_input").val('all');
+        $("#page_input").val('1');
         // تنظیم مجدد دسته بندی به all
         // $('#categories').val('all');
         // $('#categories').html(`<option>همه دسته بندی ها</option>`);
@@ -139,12 +221,12 @@ $(document).ready(function() {
             }
         })
     }
-     function loadArtists(){
+    function loadArtists(){
         $.ajax({
             type:"POST",
             url:"./ajax/artist/get_artists.php",
             success:function(res){
-                let html = '<option value="">همه خواننده ها</option>';
+                let html = '<option value="all">همه خواننده ها</option>';
                 if(res.success){
                     res.artists.forEach(cat => {
                         html += `<option value="${cat.ID}">${cat.full_name}</option>`;
@@ -155,6 +237,14 @@ $(document).ready(function() {
         })
     }
     loadArtists();
+    $('#artists').on('change',function(e){
+        e.preventDefault();
+        $("#artist_input").val($(this).val());
+        var currentUrl = window.location.href;
+        var cleanUrl = currentUrl.split('?')[0];
+        window.history.pushState({}, '', cleanUrl);
+        loadMusicData();
+    })
 });
 
 function updateDownloadCount(musicId) {

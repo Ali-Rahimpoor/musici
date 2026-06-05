@@ -53,3 +53,18 @@ function sync_artist_music_count(){
       }
    }
 }
+function autop($content){
+    $content = str_replace(['\\r\\n','\\n'],PHP_EOL,$content);
+    $content_lines = explode(PHP_EOL,$content);
+    return '<p>' . implode('<p></p>',$content_lines) . '</p>';
+}
+function autosave_p($content){
+   return str_replace(["\\r\\n","\\n"],PHP_EOL,$content);
+}
+function requestInput($var,$method="GET"){
+   if($method == "GET"){
+      return isset($_GET[$var]) && $_GET[$var] ? db_escape($_GET[$var]) : false;
+   }else{
+      return isset($_POST[$var]) && $_POST[$var] ? db_escape($_POST[$var]) : false;
+   }
+}

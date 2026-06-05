@@ -30,7 +30,7 @@ $created_at = isset($_POST['created_at']) ? $_POST['created_at'] : '';
  }
 if($music_upload){
    $music = $_FILES['music'];
-   $upload_relative_dir = 'uploads/'.date('Y/m').'/';
+   $upload_relative_dir = 'uploads/musics/'.date('Y/m').'/';
    $upload_dir = ABSPATH  . $upload_relative_dir;
    if(!file_exists($upload_dir)){
       mkdir($upload_dir,0777,true);
@@ -51,7 +51,7 @@ if($music_upload){
 }
 if($image_upload){
    $cover = $_FILES['image'];
-   $upload_relative_dir = 'uploads/'.date('Y/m').'/';
+   $upload_relative_dir = 'uploads/images/'.date('Y/m').'/';
    $upload_dir = ABSPATH  . $upload_relative_dir;
    if(!file_exists($upload_dir)){
       mkdir($upload_dir,0777,true);
@@ -68,7 +68,7 @@ if($image_upload){
 
 $music_data =[
    'title'=>$title,
-   'content'=>str_replace(["\\r\\n","\\n"],PHP_EOL,$content),
+   'content'=>autosave_p($content),
    'cover'=>$cover_url,
    'status'=>$status,
    'music_url'=>$music_url,
