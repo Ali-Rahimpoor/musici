@@ -112,6 +112,12 @@ class SiteSettings {
             "define('OTP_LENGTH', " . intval($this->get('otp_length', 4)) . ");",
             $configContent
         );
+
+         $configContent = preg_replace(
+    "/define\('SMS_API_KEY',\s*['\"]?[^'\"]*['\"]?\);/",
+    "define('SMS_API_KEY', '" . addslashes($this->get('sms_api')) . "');",
+    $configContent
+);
         
         return file_put_contents($configPath, $configContent);
     }

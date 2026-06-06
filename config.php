@@ -28,7 +28,7 @@ if (!defined('DB_USER')) {
 }
 
 if (!defined('SMS_API_KEY')) {
-    define('SMS_API_KEY', $_ENV['SMS_API_KEY']);
+    define('SMS_API_KEY', 'pHB4LGiLdC3eYOhodu1ZxgrgGVZJxygvYHotru8dXMrBtGNs');
 }
 
 if (!defined('SMS_DEBUG_PHONE')) {
@@ -37,7 +37,7 @@ if (!defined('SMS_DEBUG_PHONE')) {
 
 
 if (!defined('SITE_NAME')) {
-    define('SITE_NAME', 'موزیکیفا');
+    define('SITE_NAME', 'موزیکیفاddd');
 }
 
 if (!defined('SITE_DESCRIPTION')) {
@@ -49,11 +49,11 @@ if (!defined('SITE_STATUS')) {
 }
 
 if (!defined('OTP_DURATION')) {
-    define('OTP_DURATION', 90);
+    define('OTP_DURATION', 30);
 }
 
 if (!defined('OTP_LENGTH')) {
-    define('OTP_LENGTH', 4);
+    define('OTP_LENGTH', 6);
 }
 
 if (!defined('HOME_MUSIC_COUNT')) {

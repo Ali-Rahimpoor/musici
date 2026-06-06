@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
         'site_status' => $_POST['site_status'] ?? 'active',
         'otp_duration' => intval($_POST['otp_duration'] ?? 120),
         'otp_length' => intval($_POST['otp_length'] ?? 4),
-        'home_music_count' => intval($_POST['home_music_count'] ?? 12)
+        'home_music_count' => intval($_POST['home_music_count'] ?? 12),
+        'sms_api'=>$_POST['sms_api'] ?? ""
     ];
     
     // اعتبارسنجی
@@ -127,14 +128,13 @@ $currentSettings = $siteSettings->getAll();
             
             <div class="settings-section">
                 <h3>تنظیمات پیشرفته</h3>
-                <!-- <div class="setting-item checkbox-item">
-                    <label class="checkbox-custom-label">
-                        <input type="checkbox" class="hidden-checkbox" id="debug_mode" name="debug_mode" 
-                               <?php echo defined('SMS_DEBUG_PHONE') && SMS_DEBUG_PHONE ? 'checked' : ''; ?>>
-                        <span class="custom-checkbox"></span>
-                        حالت دیباگ SMS (ارسال کد به شماره مشخص)
-                    </label>
-                </div> -->
+                 <div class="setting-item">
+                    <h3>SMS.ir</h3>
+                    <label for="sms_api">ای پی آی اس ام اسی</label>
+                    <input type="text" class="form-input" id="sms_api" name="sms_api" 
+                           value="<?php echo htmlspecialchars($currentSettings['sms_api'] ?? ''); ?>">
+                    <small>برای فعال کردن درگاه پیامکی نیاز هست</small>
+                </div>
             </div>
             
             <div class="form-actions">
