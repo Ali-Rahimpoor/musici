@@ -28,6 +28,7 @@ $(document).ready(function() {
         }
     });
 });
+
     
     // ============= تغییر حالت active منو بر اساس صفحه فعلی =============
     function setActiveMenuItem() {
@@ -66,7 +67,26 @@ $(document).ready(function() {
             }
         });
     }
-    
+    $(".publish-comment , .delete-comment").click(function(e){
+        e.preventDefault();
+        let comment_id = $(this).closest('.set-comment-status').data('comment-id');
+        let url = '404';
+        if($(this).hasClass('publish-comment')){    
+             url = "../ajax/comment/publish.php";
+        }
+        else if($(this).hasClass('delete-comment')){
+             url = "../ajax/comment/delete.php";
+        }
+        $.ajax({
+            type:"POST",
+            url:url,
+            data:{comment_id},
+            success:function(res){
+                toaster.success('موفقیت',res.message);
+            }
+        })
+        
+    })
     // ============= خروج از حساب =============
     $('.logout-btn').on('click', function(e) {
         e.preventDefault();
@@ -452,6 +472,7 @@ $(document).ready(function() {
     });
     $(window).on('load', function(e){
     let music_id = $('#music_id').val();
+    if(music_id){
      if(music_id != 0){        
             if($('#hidden_music_url').val().length && musicFile===null){
                 musicFile = $('#hidden_music_url').val();
@@ -482,7 +503,7 @@ $(document).ready(function() {
                             $('#musicArtist').val(artist);
                     }
                 });           
-        };
+        };}
             
     });
     if($('#btn_delete_music')[0]){

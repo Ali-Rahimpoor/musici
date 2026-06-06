@@ -23,6 +23,10 @@
                 <!-- بخش مدیریت (فقط برای ادمین) -->
                 <div class="admin-section " id="adminSection">
                     <div class="nav-divider">مدیریت</div>
+                    <a href='comments.php' class="nav-item" data-page="settings">
+                        <span class="nav-icon">🗨️</span>
+                        <span  class="nav-text">کامنت ها</span>
+                    </a>
                     <a href='settings.php' class="nav-item" data-page="settings">
                         <span class="nav-icon">⚙️</span>
                         <span  class="nav-text">تنظیمات سایت</span>

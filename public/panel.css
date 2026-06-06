@@ -1771,4 +1771,169 @@
     .upload-area {
         padding: 20px;
     }
+}/* استایل بخش نظرات - بر اساس HTML موجود */
+
+.comments-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.comment-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    transition: var(--transition-smooth);
+}
+
+.comment-item:hover {
+    border-color: var(--color-accent);
+    transform: translateX(-4px);
+}
+
+/* استایل نویسنده */
+.author-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.author-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-accent);
+    background: var(--color-bg-dark);
+}
+
+.author-name {
+    font-family: 'balo-bold', system-ui, sans-serif;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+
+/* متن کامنت */
+.comment-title {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+}
+
+/* دکمه‌ها */
+.set-comment-status {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+}
+
+#publish-comment {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-family: 'balo-med', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    background: linear-gradient(135deg, var(--color-primary), #1a4d3e);
+    color: white;
+}
+
+#publish-comment:hover {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(72, 187, 150, 0.3);
+}
+
+#delete-comment {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-family: 'balo-med', system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    background: rgba(248, 113, 113, 0.15);
+    color: var(--color-error);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+#delete-comment:hover {
+    background: rgba(248, 113, 113, 0.3);
+    transform: translateY(-2px);
+    border-color: var(--color-error);
+}
+
+/* وضعیت‌های مختلف کامنت (اختیاری - با JS می‌تونید اضافه کنید) */
+.comment-item[data-status="approved"] {
+    border-right: 3px solid var(--color-success);
+}
+
+.comment-item[data-status="pending"] {
+    border-right: 3px solid var(--color-accent);
+}
+
+.comment-item[data-status="rejected"] {
+    border-right: 3px solid var(--color-error);
+    opacity: 0.7;
+}
+
+/* انیمیشن ورود */
+.comment-item {
+    animation: fadeIn 0.3s ease backwards;
+}
+
+.comment-item:nth-child(1) { animation-delay: 0.05s; }
+.comment-item:nth-child(2) { animation-delay: 0.1s; }
+.comment-item:nth-child(3) { animation-delay: 0.15s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ریسپانسیو موبایل */
+@media (max-width: 640px) {
+    .comment-item {
+        padding: 1rem;
+    }
+    
+    .author-img {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .author-name {
+        font-size: 0.85rem;
+    }
+    
+    .comment-title {
+        font-size: 0.85rem;
+    }
+    
+    #publish-comment, #delete-comment {
+        padding: 0.4rem 1rem;
+        font-size: 0.7rem;
+    }
+    
+    .set-comment-status {
+        gap: 0.5rem;
+    }
 }

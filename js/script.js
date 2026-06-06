@@ -245,6 +245,99 @@ $(document).ready(function() {
         window.history.pushState({}, '', cleanUrl);
         loadMusicData();
     })
+    $("#comment-form").submit(function(e){
+        e.preventDefault();
+       
+        let comment = $(this).find('textarea').val().trim();
+        let user_id = $(this).data('user-id');
+        let music_id= $(this).data('music-id');
+        if(comment.length==0){
+            toaster.error('متن کامنت خالی هست');
+            return;
+        }
+        if(!user_id){
+            toaster.error('کاربری یافت نشد !');
+            return;
+        }
+         if(!music_id){
+            toaster.error('موزیکی یافت نشد !');
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"./ajax/comment/save.php",
+            data:{comment,user_id,music_id},
+            success:function(res){
+                toaster.success(res.message);
+                $('.comments-list').prepend(`
+                     <div class="comment-item">
+            <div class="comment-user">
+                  <span class="user-name">شما</span>
+                  <div style="gap: 12px; display:flex; align-items:center;">
+                  <span class="comment-date">الان</span>
+                  </div>
+            </div>
+            <p class="comment-text">${res.comment}</p>
+         </div>
+                    `);
+            }
+        })
+    })
+    $('.btn-cancel-reply').on('click',function(e){
+            e.preventDefault();
+        
+        let comment_item = $(this).closest('.comment-item');
+        
+        let comment_reply = comment_item.find('.reply-form-container');
+        comment_reply.removeClass('active');
+    })
+    
+    
+    $(".reply-btn").on('click',function(e){
+        e.preventDefault();
+        
+        let comment_item = $(this).closest('.comment-item');
+        
+        let comment_reply = comment_item.find('.reply-form-container');
+        comment_reply.addClass('active');
+    })
+
+    $('.reply-form-container').submit(function(e){
+        e.preventDefault();      
+        let music_id = $(this).data('music-id');
+        let parent_id = $(this).data('parent-id');
+        let user_id = $(this).data('user-id');
+        let comment = $(this).find('textarea').val().trim();
+        let reply_list = $(this).closest('.comment-container').find('.replies-list');
+        let _this = $(this);
+        if(comment.length ==0){
+            toaster.error('محتوا کامنت خالی است !');
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"./ajax/comment/save.php",
+            data:{music_id,parent_id,user_id,comment},
+            success:function(res){
+            $(_this).removeClass("active");
+            toaster.success('نظر شما ثبت شد',res.message);
+                            $(reply_list).prepend(`
+                                <div style='background-color:#ffffff30;' class="reply-item">
+               <div class="comment-user-answer">
+                  <div style="gap: 12px; display:flex; align-items:center;">
+                     <span class="user-name">شما</span>
+                  </div>
+                  <div style="gap: 12px; display:flex; align-items:center;">
+                     <span class="comment-date">الان</span>
+                  </div>
+               </div>
+               <p class="comment-text">${res.comment}</p>
+            </div>
+                                `);             
+            }
+        })
+        
+    })
 });
 
 function updateDownloadCount(musicId) {

@@ -27,8 +27,137 @@
     <link rel="stylesheet" href="./public/style.css">
     <link rel="stylesheet" href="./public/player.css">
     <style>
+        .comment-user-answer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    position: relative;
+}
+
+.comment-user-answer .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.comment-user-answer .user-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: #4a90e2;
+    background: #eef3fc;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.comment-user-answer .user-name::before {
+    content: "✍️";
+    font-size: 12px;
+}
+
+.comment-user-answer .comment-date {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.comment-user-answer .answer-badge {
+    background: #e6f7e6;
+    color: #2e7d32;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.comment-user-answer .answer-badge::before {
+    content: "✅ ";
+}
         /* استایل‌های حرفه‌ای صفحه تک موزیک - سطح جهانی */
-        
+        .reply-btn {
+            background: transparent;
+            border: 1px solid #e0e0e0;
+            color: #4a90e2;
+            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            
+        }
+
+        .reply-btn:hover {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        /* فرم پاسخ */
+        .reply-form-container {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #e0e0e0;
+            display: none;
+        }
+        .reply-form-container.active{
+            display: block;
+        }
+
+
+        .reply-textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        .reply-textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        /* دکمه‌های فرم پاسخ */
+        .reply-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        .btn-cancel-reply {
+            background: #f5f5f5;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-cancel-reply:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-submit-reply {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-submit-reply:hover {
+            background: #357abd;
+        }
         /* انیمیشن‌های پیشرفته */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -669,6 +798,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--color-primary);
         }
+        
     </style>
 </head>
 <body>

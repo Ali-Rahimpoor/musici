@@ -35,3 +35,12 @@ function is_user_admin($user_role='user'){
     print_r('دسترسی غیر مجاز');exit;
   }
 }
+function check_user_admin($user_id){
+   $sql = "SELECT role FROM users WHERE ID = '$user_id'";
+   $res = db_query($sql);
+   if($res && $res -> num_rows){
+    $role =  mysqli_fetch_column($res);
+    return $role ==='admin' ? true : false;
+   }
+  return false;
+}

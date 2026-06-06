@@ -19,3 +19,23 @@ JOIN music_artist ON musics.ID = music_artist.music_id
 JOIN artists ON artists.ID = music_artist.artist_id
 JOIN music_category ON musics.ID = music_category.music_id
 JOIN categories ON categories.ID = music_category.category_id;
+
+
+
+CREATE OR REPLACE VIEW view_comments AS SELECT
+    users.ID AS user_id,
+    users.name AS user_name,
+    users.role AS user_role,
+    users.avatar AS user_avatar,
+    comments.ID AS comment_id,
+    comments.comment AS comment_comment,
+    comments.updated_at AS comment_updated_at,
+    comments.status AS comment_status,
+    comments.parent_id AS comment_parent_id,
+    musics.ID AS music_id,
+    musics.title AS music_title,
+    musics.cover AS musics_cover
+FROM
+    comments
+INNER JOIN users ON(users.ID = comments.user_id)
+INNER JOIN musics ON(musics.ID = comments.music_id)
