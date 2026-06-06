@@ -1,6 +1,7 @@
 CREATE OR REPLACE VIEW view_musics AS 
 SELECT
     musics.ID AS music_id,
+    musics.slug AS music_slug,
     musics.title AS music_title,
     musics.content AS music_content,
     musics.cover AS music_cover,

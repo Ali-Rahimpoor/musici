@@ -1,0 +1,28 @@
+RewriteEngine On
+RewriteBase /myphp/musici/
+
+# حذف اشتباه /music/ از مسیر AJAXها
+RewriteRule ^music/ajax/(.*)$ ajax/$1 [L,NC]
+
+# استثنا برای فایل‌های واقعی
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# استثنا برای uploads و ajax
+RewriteRule ^(music/)?uploads/ - [L,NC]
+RewriteRule ^(music/)?ajax/ - [L,NC]
+RewriteRule \.(css|js|jpg|jpeg|png|gif|webp|svg|ico)$ - [L,NC]
+
+# قانون برای slug فارسی و انگلیسی (UTF-8)
+RewriteRule ^music/([a-zA-Z0-9\-_\x{80}-\x{FF}]+)$ music.php?slug=$1 [L,QSA,B,NE]
+
+# یا این قانون ساده‌تر (همه چیز را قبول می‌کند)
+RewriteRule ^music/(.+)$ music.php?slug=$1 [L,QSA,B,NE]
+
+# بقیه قوانین...
+RewriteRule ^artist/([0-9]+)$ index.php?artist=$1 [L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^panel/([^/]+)/?$ panel/$1.php [L]
+RewriteRule ^panel/comments/([0-9]+)$ panel/comments.php?id=$1 [L,QSA]

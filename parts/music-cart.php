@@ -7,7 +7,7 @@
    <div class="card-image">
       <img src="<?php echo isset($music['music_cover']) && $music['music_cover'] ? $music['music_cover'] : site_url('public/img/default_cover.jpg'); ?>" alt="کاور آهنگ">
       <div class="play-overlay">
-            <a href='<?php echo site_url('music.php?id='.$music['music_id']); ?>' class="play-btn">▶</a>
+            <a href='<?php echo site_url('music/'.$music['music_slug']); ?>' class="play-btn">▶</a>
       </div>
    </div>
    <div class="card-body">

@@ -7,15 +7,15 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href='index.php' class="nav-item" data-page="dashboard">
+                <a href='index' class="nav-item" data-page="dashboard">
                     <span class="nav-icon">📊</span>
                     <span  class="nav-text">داشبورد اصلی</span>
                 </a>
-                <a href='profile.php' class="nav-item" data-page="profile">
+                <a href='profile' class="nav-item" data-page="profile">
                     <span class="nav-icon">👤</span>
                     <span  class="nav-text">پروفایل کاربری</span>
                 </a>
-                <a href='favorites.php' class="nav-item" data-page="favorites">
+                <a href='favorites' class="nav-item" data-page="favorites">
                     <span class="nav-icon">❤️</span>
                     <span  class="nav-text">علاقه‌مندی‌ها</span>
                 </a>
@@ -23,23 +23,23 @@
                 <!-- بخش مدیریت (فقط برای ادمین) -->
                 <div class="admin-section " id="adminSection">
                     <div class="nav-divider">مدیریت</div>
-                    <a href='comments.php' class="nav-item" data-page="settings">
+                    <a href='comments' class="nav-item" data-page="settings">
                         <span class="nav-icon">🗨️</span>
                         <span  class="nav-text">کامنت ها</span>
                     </a>
-                    <a href='settings.php' class="nav-item" data-page="settings">
+                    <a href='settings' class="nav-item" data-page="settings">
                         <span class="nav-icon">⚙️</span>
                         <span  class="nav-text">تنظیمات سایت</span>
                     </a>
-                    <a href='addmusic.php' class="nav-item" data-page="add-music">
+                    <a href='addmusic' class="nav-item" data-page="add-music">
                         <span class="nav-icon">🎵</span>
                         <span  class="nav-text">اضافه کردن موزیک</span>
                     </a>
-                    <a href='artist.php' class="nav-item" data-page="add-artist">
+                    <a href='artist' class="nav-item" data-page="add-artist">
                         <span class="nav-icon">🎵</span>
                         <span  class="nav-text">اضافه کردن خواننده</span>
                     </a>
-                    <a href='category.php' class="nav-item" data-page="add-category">
+                    <a href='category' class="nav-item" data-page="add-category">
                         <span class="nav-icon">📁</span>
                         <span  class="nav-text">اضافه کردن دسته‌بندی</span>
                     </a>
