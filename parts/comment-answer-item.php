@@ -1,7 +1,7 @@
 <div class="reply-item">
       <div class="comment-user-answer">
       <div style="gap: 12px; display:flex; align-items:center;">
-         <span><img width="25" height="25" src="<?php echo htmlspecialchars($reply['user_avatar']); ?>" alt=""></span>
+         <span><img width="25" height="25" src="<?php echo htmlspecialchars( !empty($reply['user_avatar']) ? $reply['user_avatar'] : site_url('public/img/default_avatar.jpg')); ?>" alt=""></span>
          <span class="user-name"><?php echo htmlspecialchars($reply['user_name']); ?></span>
          <?php if($reply['user_role'] == 'admin'): ?>
             <span class="admin-badge">مدیر</span>

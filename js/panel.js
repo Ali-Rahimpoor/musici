@@ -70,6 +70,7 @@ $(document).ready(function() {
     $(".publish-comment , .delete-comment").click(function(e){
         e.preventDefault();
         let comment_id = $(this).closest('.set-comment-status').data('comment-id');
+        let comment_item = $(this).closest('.comment-item');
         let url = '404';
         if($(this).hasClass('publish-comment')){    
              url = "../ajax/comment/publish.php";
@@ -82,6 +83,7 @@ $(document).ready(function() {
             url:url,
             data:{comment_id},
             success:function(res){
+                comment_item.remove();
                 toaster.success('موفقیت',res.message);
             }
         })

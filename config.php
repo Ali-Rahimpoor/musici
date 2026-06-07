@@ -37,7 +37,7 @@ if (!defined('SMS_DEBUG_PHONE')) {
 
 
 if (!defined('SITE_NAME')) {
-    define('SITE_NAME', 'موزیکیفاddd');
+    define('SITE_NAME', 'موزیکیفا');
 }
 
 if (!defined('SITE_DESCRIPTION')) {
